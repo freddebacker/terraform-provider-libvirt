@@ -59,6 +59,8 @@ The following arguments are supported:
    [below](#define-boot-device-order).
 * `emulator` - (Optional) The path of the emulator to use
 * `qemu_agent` (Optional) By default is disabled, set to true for enabling it. More info [qemu-agent](https://wiki.libvirt.org/page/Qemu_guest_agent).
+* `nomemballoon` - (Optional) Set to `true` will add a MemBalloon device with `model=None` to prevent libvirt to add one automatically.
+  Changing this forces a new resource to be created.
 ### Kernel and boot arguments
 
 * `kernel` - (Optional) The path of the kernel to boot

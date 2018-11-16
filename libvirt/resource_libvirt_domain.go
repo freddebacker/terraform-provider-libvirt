@@ -243,6 +243,13 @@ func resourceLibvirtDomain() *schema.Resource {
 					},
 				},
 			},
+			"nomemballoon": {
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  false,
+				ForceNew: true,
+				Required: false,
+			},
 			"console": {
 				Type:     schema.TypeList,
 				Optional: true,
@@ -433,6 +440,15 @@ func resourceLibvirtDomainCreate(d *schema.ResourceData, meta interface{}) error
 	}
 
 	setConsoles(d, &domainDef)
+
+	if nomemballoon, ok := d.GetOk("nomemballoon"); ok {
+		if nomemballoon.(bool) {
+			domainDef.Devices.MemBalloon = &libvirtxml.DomainMemBalloon{
+				Model: "none",
+			}
+		}
+	}
+
 	setCmdlineArgs(d, &domainDef)
 	setFirmware(d, &domainDef)
 	setBootDevices(d, &domainDef)
